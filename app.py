@@ -1413,8 +1413,8 @@ def search():
                     # Clean up date string
                     date_str = date_str.strip()
                     
-                    # Try parsing the date with multiple formats
-                    date_formats = ['%d/%m/%Y', '%d-%m-%Y', '%Y-%m-%d', '%d/%b/%Y']  # Added '%d/%b/%Y' for '08/Jan/2025'
+                    # Try parsing the date with multiple formats (add 2-digit year support)
+                    date_formats = ['%d/%m/%Y', '%d-%m-%Y', '%Y-%m-%d', '%d/%b/%Y', '%d/%m/%y', '%d-%m-%y']
                     transaction_date = None
                     
                     for fmt in date_formats:
@@ -1429,7 +1429,6 @@ def search():
                 except Exception as e:
                     print(f"Error parsing date: {e}")
                     continue
-            
             transactions = filtered_transactions
             print(f"After date filtering: {len(transactions)} transactions")
         
@@ -1599,19 +1598,71 @@ def export_results():
             
             filtered_transactions = []
             for transaction in transactions:
-                # Use value_date for ICICI bank type
-                date_str = transaction.get('value_date') if bank_type == 'ICICI' else transaction.get('date')
-                
-                if date_str:
-                    date_str = date_str.strip()
-                    try:
-                        transaction_date = datetime.strptime(date_str, '%d/%b/%Y')  # Adjust as needed
-                        if start_date <= transaction_date <= end_date:
-                            filtered_transactions.append(transaction)
-                    except ValueError:
+                try:
+                    # Use value_date for ICICI bank type
+                    date_str = transaction.get('value_date') if bank_type == 'ICICI' else transaction.get('date')
+                    if not date_str:
                         continue
-            
+                    date_str = date_str.strip()
+                    # Try parsing the date with multiple formats
+                    date_formats = ['%d/%m/%Y', '%d-%m-%Y', '%Y-%m-%d', '%d/%b/%Y']
+                    transaction_date = None
+                    for fmt in date_formats:
+                        try:
+                            transaction_date = datetime.strptime(date_str, fmt)
+                            break
+                        except ValueError:
+                            continue
+                    if transaction_date and start_date <= transaction_date <= end_date:
+                        filtered_transactions.append(transaction)
+                except Exception as e:
+                    print(f"Error parsing date: {e}")
+                    continue
             transactions = filtered_transactions
+        
+        # Apply phrase filtering if provided (copying logic from /search)
+        if phrase:
+            results = []
+            if bank_type == 'ICICI':
+                for transaction in transactions:
+                    transaction_remarks = str(transaction.get('transaction_remarks', '')).lower()
+                    tran_id = str(transaction.get('tran_id', '')).lower()
+                    cheque_ref = str(transaction.get('cheque_ref', '')).lower()
+                    raw_text = str(transaction.get('raw_text', '')).lower()
+                    if phrase in transaction_remarks:
+                        results.append(transaction)
+                        continue
+                    if phrase in tran_id:
+                        results.append(transaction)
+                        continue
+                    if phrase in cheque_ref:
+                        results.append(transaction)
+                        continue
+                    if phrase in raw_text:
+                        results.append(transaction)
+                        continue
+            elif bank_type == 'SBI':
+                for transaction in transactions:
+                    searchable_fields = {
+                        'narration': transaction.get('narration', ''),
+                        'details': transaction.get('details', ''),
+                        'cheque_ref': transaction.get('cheque_ref', ''),
+                        'raw_text': transaction.get('raw_text', '')
+                    }
+                    searchable_text = ' '.join([str(value).lower() for value in searchable_fields.values()])
+                    if phrase in searchable_text:
+                        results.append(transaction)
+            else:  # HDFC and others
+                for transaction in transactions:
+                    searchable_fields = {
+                        'narration': transaction.get('narration', ''),
+                        'cheque_ref': transaction.get('cheque_ref', ''),
+                        'raw_text': transaction.get('raw_text', '')
+                    }
+                    searchable_text = ' '.join([str(value).lower() for value in searchable_fields.values()])
+                    if phrase in searchable_text:
+                        results.append(transaction)
+            transactions = results
         
         print(f"Exporting {len(transactions)} matching transactions")
         
@@ -1620,8 +1671,6 @@ def export_results():
             columns = ['S.N.', 'Tran. Id', 'Value Date', 'Transaction Date', 'Transaction Posted Date',
                        'Cheque No./Ref. No.', 'Transaction Remarks', 'Withdrawal Amt (INR)',
                        'Deposit Amt (INR)', 'Balance (INR)']
-            
-            # Map transaction fields to columns
             df = pd.DataFrame([{
                 'S.N.': t.get('sn', '') or str(i+1),
                 'Tran. Id': t.get('tran_id', ''),
@@ -1635,11 +1684,8 @@ def export_results():
                 'Balance (INR)': t.get('balance', '')
             } for i, t in enumerate(transactions)])
         elif bank_type == 'HDFC':
-            # Define columns for HDFC
             columns = ['Date', 'Narration', 'Chq./Ref.No.', 'Value Dt',
                        'Withdrawal Amt.', 'Deposit Amt.', 'Closing Balance']
-            
-            # Map transaction fields to columns for HDFC
             df = pd.DataFrame([{
                 'Date': t.get('date', ''),
                 'Narration': t.get('narration', ''),
@@ -1650,10 +1696,7 @@ def export_results():
                 'Closing Balance': t.get('closing_balance', '')
             } for t in transactions])
         else:
-            # Handle other bank types similarly if needed
-            df = pd.DataFrame()  # Initialize df to avoid UnboundLocalError
-
-        # Fill NaN values
+            df = pd.DataFrame()
         df = df.fillna('')
         
         # Export based on format
