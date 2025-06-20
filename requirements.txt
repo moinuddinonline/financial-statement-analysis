@@ -5,3 +5,4 @@ python-dotenv==1.0.0
 Werkzeug==3.0.1
 Flask-WTF==1.1.1
 WTForms==3.0.1 
+tabula-py==2.9.0
