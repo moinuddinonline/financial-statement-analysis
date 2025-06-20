@@ -2101,5 +2101,7 @@ def extract_transactions_from_excel_directly(file_path, bank_type):
         print(traceback.format_exc())
         return []
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# ⬇️ Add this at the bottom of app.py
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8080))  # Get PORT from env
+    app.run(host="0.0.0.0", port=port)        # Bind to 0.0.0.0 for external access
