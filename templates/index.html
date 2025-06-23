@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,15 +11,17 @@
         body {
             background-color: #f8f9fa;
         }
+
         .header-section {
             background: linear-gradient(135deg, #0d6efd 0%, #0099ff 100%);
             color: white;
             padding: 4rem 0;
             margin-bottom: 2rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
         }
+
         .header-section::before {
             content: '';
             position: absolute;
@@ -26,69 +29,101 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
             z-index: 1;
         }
+
         .header-content {
             position: relative;
             z-index: 2;
         }
+
         .header-title {
             font-size: 3.5rem;
             font-weight: 800;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
             letter-spacing: -1px;
         }
+
         .header-subtitle {
             font-size: 1.4rem;
             opacity: 0.9;
             margin-bottom: 2rem;
             font-weight: 300;
         }
+
         .bank-icons {
             margin-top: 2rem;
             display: flex;
             justify-content: center;
             gap: 2rem;
         }
+
         .bank-icons i {
             font-size: 2.8rem;
             color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
             opacity: 0.9;
         }
+
         .bank-icons i:hover {
             transform: translateY(-5px) scale(1.1);
             opacity: 1;
         }
+
         @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
         }
-        .bank-icons i:nth-child(1) { animation: float 3s ease-in-out infinite; }
-        .bank-icons i:nth-child(2) { animation: float 3s ease-in-out infinite 0.5s; }
-        .bank-icons i:nth-child(3) { animation: float 3s ease-in-out infinite 1s; }
-        .bank-icons i:nth-child(4) { animation: float 3s ease-in-out infinite 1.5s; }
-        .container { 
-            max-width: 1200px; 
+
+        .bank-icons i:nth-child(1) {
+            animation: float 3s ease-in-out infinite;
         }
-        .upload-section { 
+
+        .bank-icons i:nth-child(2) {
+            animation: float 3s ease-in-out infinite 0.5s;
+        }
+
+        .bank-icons i:nth-child(3) {
+            animation: float 3s ease-in-out infinite 1s;
+        }
+
+        .bank-icons i:nth-child(4) {
+            animation: float 3s ease-in-out infinite 1.5s;
+        }
+
+        .container {
+            max-width: 1200px;
+        }
+
+        .upload-section {
             background: white;
-            margin: 20px 0; 
+            margin: 20px 0;
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
         }
+
         .upload-section:hover {
             transform: translateY(-5px);
         }
-        .bank-select { 
+
+        .bank-select {
             margin-bottom: 20px;
         }
+
         .section-title {
             color: #0d6efd;
             font-weight: 700;
@@ -98,6 +133,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
+
         .section-title:after {
             content: '';
             position: absolute;
@@ -108,16 +144,19 @@
             background: #0d6efd;
             border-radius: 3px;
         }
+
         .form-control {
             border-radius: 10px;
             padding: 0.75rem 1rem;
             border: 2px solid #e9ecef;
             transition: all 0.3s ease;
         }
+
         .form-control:focus {
             border-color: #0d6efd;
             box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
         }
+
         .btn-primary {
             padding: 0.75rem 2rem;
             border-radius: 10px;
@@ -126,10 +165,12 @@
             letter-spacing: 1px;
             transition: all 0.3s ease;
         }
+
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3);
         }
+
         .upload-area {
             border: 2px dashed #ccc;
             border-radius: 10px;
@@ -138,50 +179,61 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
+
         .upload-area:hover {
             border-color: #0d6efd;
             background-color: #f8f9fa;
         }
+
         .search-results {
             margin-top: 20px;
         }
+
         .loading {
             display: none;
         }
+
         .narration-cell {
             max-width: 300px;
             white-space: normal;
             word-wrap: break-word;
             text-align: left;
         }
+
         .matched-phrase-cell {
             max-width: 300px;
             white-space: normal;
             word-wrap: break-word;
             text-align: left;
         }
+
         .text-nowrap {
             white-space: nowrap;
         }
+
         .text-end {
             text-align: right;
         }
+
         mark {
             background-color: #ffd700;
             padding: 2px;
             border-radius: 2px;
             font-weight: bold;
         }
+
         .table th {
             background-color: #f8f9fa;
             position: sticky;
             top: 0;
             z-index: 1;
         }
+
         .table-responsive {
             max-height: 70vh;
             overflow-y: auto;
         }
+
         /* ICICI Bank specific styling */
         .icici-table th {
             background-color: #e7f1ff !important;
@@ -191,24 +243,29 @@
             text-align: center;
             padding: 8px 4px;
         }
+
         .icici-table td {
             border: 1px solid #ddd;
             padding: 6px 4px;
             vertical-align: middle;
             font-size: 0.9rem;
         }
+
         .icici-table tr:nth-child(even) {
             background-color: #f9f9f9;
         }
+
         .icici-table tr:hover {
             background-color: #f1f1f1;
         }
+
         .icici-table .narration-cell {
             max-width: 250px;
             text-align: left;
         }
     </style>
 </head>
+
 <body>
     <section class="header-section">
         <div class="container">
@@ -225,7 +282,7 @@
                     <i class="fas fa-search-dollar"></i>
                 </div>
             </div>
-                    </div>
+        </div>
     </section>
 
     <div class="container">
@@ -235,12 +292,12 @@
                 <label for="bankType" class="form-label">Select Bank:</label>
                 <select class="form-select" id="bankType" name="bankType" onchange="handleBankSelection()">
                     <option value="">Select a bank...</option>
-                    <option value="HDFC">HDFC Bank</option>
                     <option value="ICICI">ICICI Bank</option>
-                    <option value="SBI">SBI Bank</option>
+                    <option value="HDFC">HDFC Bank</option>
+                    <!-- <option value="SBI">SBI Bank</option> -->
                     <option value="OTHERS">Others</option>
                 </select>
-                            </div>
+            </div>
 
             <div class="mb-4">
                 <label for="file" class="form-label">Upload Statement (PDF, CSV, XLSX):</label>
@@ -258,15 +315,15 @@
                 <div class="col-md-4">
                     <label class="form-label">Search Phrase</label>
                     <input type="text" id="searchPhrase" class="form-control" placeholder="Enter search phrase...">
-                    </div>
+                </div>
                 <div class="col-md-3">
                     <label class="form-label">Start Date</label>
                     <input type="date" id="startDate" class="form-control">
-                        </div>
+                </div>
                 <div class="col-md-3">
                     <label class="form-label">End Date</label>
                     <input type="date" id="endDate" class="form-control">
-                    </div>
+                </div>
                 <div class="col-md-2">
                     <label class="form-label">&nbsp;</label>
                     <button class="btn btn-primary w-100" type="button" onclick="search()">
@@ -286,7 +343,7 @@
             const fileInput = document.getElementById('file');
             const uploadButton = document.querySelector('.btn-primary');
             const searchSection = document.getElementById('searchSection');
-            
+
             if (bankType === 'OTHERS') {
                 // Disable file upload and search for Others
                 fileInput.disabled = true;
@@ -310,7 +367,7 @@
         function uploadFile() {
             const fileInput = document.getElementById('file');
             const bankType = document.getElementById('bankType').value;
-            
+
             if (!bankType || bankType === 'OTHERS') {
                 alert('Please select a valid bank type');
                 return;
@@ -329,15 +386,15 @@
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.getElementById('searchSection').style.display = 'block';
-                    alert(data.message);
-                } else {
-                    alert(data.error);
-                }
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('searchSection').style.display = 'block';
+                        alert(data.message);
+                    } else {
+                        alert(data.error);
+                    }
+                });
         }
 
         function search() {
@@ -358,20 +415,20 @@
                     }
                 })
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    displayResults(data.results, data.bank_type);
-                } else {
-                    alert(data.error);
-                }
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        displayResults(data.results, data.bank_type);
+                    } else {
+                        alert(data.error);
+                    }
+                });
         }
 
         function displayResults(results, bankType) {
             const resultsDiv = document.getElementById('results');
             resultsDiv.style.display = 'block';
-            
+
             if (results.length === 0) {
                 resultsDiv.innerHTML = '<p class="text-center mt-4">No results found</p>';
                 return;
@@ -419,13 +476,13 @@
                     // Highlight the matched phrase in transaction remarks
                     let highlightedRemarks = result.transaction_remarks || '';
                     const searchPhrase = document.getElementById('searchPhrase').value.toLowerCase();
-                    
+
                     if (searchPhrase && result.matched_field === 'transaction_remarks') {
                         // Create a case-insensitive regular expression for the search phrase
                         const regex = new RegExp(searchPhrase, 'gi');
                         highlightedRemarks = highlightedRemarks.replace(regex, match => `<mark>${match}</mark>`);
                     }
-                    
+
                     tableHTML += `
                         <tr>
                             <td>${index + 1}</td>
@@ -458,13 +515,13 @@
                     // Highlight the matched phrase in details/narration
                     let highlightedNarration = result.narration || '';
                     const searchPhrase = document.getElementById('searchPhrase').value.toLowerCase();
-                    
+
                     if (searchPhrase && result.matched_fields && result.matched_fields.includes('narration')) {
                         // Create a case-insensitive regular expression for the search phrase
                         const regex = new RegExp(searchPhrase, 'gi');
                         highlightedNarration = highlightedNarration.replace(regex, match => `<mark>${match}</mark>`);
                     }
-                    
+
                     tableHTML += `
                         <tr>
                             <td>${result.date || ''}</td>
@@ -495,13 +552,13 @@
                     // Highlight the matched phrase in narration
                     let highlightedNarration = result.narration || '';
                     const searchPhrase = document.getElementById('searchPhrase').value.toLowerCase();
-                    
+
                     if (searchPhrase && result.matched_fields && result.matched_fields.includes('narration')) {
                         // Create a case-insensitive regular expression for the search phrase
                         const regex = new RegExp(searchPhrase, 'gi');
                         highlightedNarration = highlightedNarration.replace(regex, match => `<mark>${match}</mark>`);
                     }
-                    
+
                     tableHTML += `
                         <tr>
                             <td>${result.date || ''}</td>
@@ -520,11 +577,11 @@
         </table>
     </div>`;
 
-    resultsDiv.innerHTML = tableHTML;
+            resultsDiv.innerHTML = tableHTML;
 
-    // Add table styling
-    const style = document.createElement('style');
-    style.textContent = `
+            // Add table styling
+            const style = document.createElement('style');
+            style.textContent = `
         .table-responsive {
             max-height: 70vh;
             overflow-y: auto;
@@ -551,14 +608,14 @@
             text-align: right;
         }
     `;
-    document.head.appendChild(style);
-}
+            document.head.appendChild(style);
+        }
 
         function exportResults(format) {
             const phrase = document.getElementById('searchPhrase').value;
             const startDate = document.getElementById('startDate').value;
             const endDate = document.getElementById('endDate').value;
-            
+
             fetch('/export', {
                 method: 'POST',
                 headers: {
@@ -573,26 +630,27 @@
                     format: format
                 })
             })
-            .then(response => {
-                if (format === 'pdf') {
+                .then(response => {
+                    if (format === 'pdf') {
+                        return response.blob();
+                    }
                     return response.blob();
-                }
-                return response.blob();
-            })
-            .then(blob => {
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `search_results.${format}`;
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-                a.remove();
-            })
-            .catch(error => {
-                alert('Error exporting results: ' + error);
-            });
+                })
+                .then(blob => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `search_results.${format}`;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    a.remove();
+                })
+                .catch(error => {
+                    alert('Error exporting results: ' + error);
+                });
         }
     </script>
 </body>
+
 </html>
