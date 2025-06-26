@@ -17,21 +17,22 @@ from reportlab.lib.units import inch
 import openpyxl
 from openpyxl.utils import get_column_letter
 
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key-here'
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 app.config['PERMANENT_SESSION_LIFETIME'] = 1800  # 30 minutes session lifetime
 
+
 # Ensure upload and data directories exist
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 os.makedirs('data', exist_ok=True)
 
-ALLOWED_EXTENSIONS = {'pdf', 'csv', 'xlsx'}
+ALLOWED_EXTENSIONS = {'pdf', 'csv', 'xlsx','xls','xlsm'}
 
 def allowed_file(filename):     
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
 def save_transactions(transactions, session_id):
     """Save transactions to a file"""
     file_path = os.path.join('data', f'{session_id}_transactions.json')
@@ -580,6 +581,8 @@ def extract_transactions_from_pdf_table(file_path):
     except Exception as e:
         print(f"Error extracting table from PDF: {str(e)}")
         return []
+    
+
 
 # Add a new function to extract SBI transactions from PDF using PyPDF2
 def extract_sbi_transactions_from_pdf(file_path):
@@ -680,6 +683,8 @@ def extract_sbi_transactions_from_pdf(file_path):
         print(f"Error extracting SBI transactions from PDF: {str(e)}")
         return []
 
+
+
 def detect_bank_type(df):
     """Detect bank type from DataFrame columns and content"""
     # Convert column names to lowercase for case-insensitive matching
@@ -744,6 +749,7 @@ def detect_bank_type(df):
     
     print("Could not detect bank type, returning UNKNOWN")
     return 'UNKNOWN'
+
 
 def parse_transactions_from_icici(df):
     transactions = []
@@ -972,6 +978,8 @@ def parse_transactions_from_icici(df):
     
     return transactions
 
+
+
 def parse_transactions_from_sbi(df):
     transactions = []
     print("Parsing SBI statement with columns:", df.columns.tolist())
@@ -1073,6 +1081,8 @@ def parse_transactions_from_sbi(df):
     
     print(f"Extracted {len(transactions)} transactions from SBI statement")
     return transactions
+
+
 
 def validate_bank_file(bank_type, filename):
     """Validate if the uploaded file matches the selected bank type"""
@@ -1363,6 +1373,8 @@ def upload_file():
     
     return jsonify({'success': False, 'error': 'Invalid file type'})
 
+
+
 @app.route('/search', methods=['POST'])
 def search():
     try:
@@ -1566,6 +1578,8 @@ def search():
         print(f"Search error: {str(e)}")
         print(traceback.format_exc())
         return jsonify({'success': False, 'error': str(e)})
+    
+
 
 @app.route('/clear_session', methods=['POST'])
 def clear_session():
@@ -1778,6 +1792,8 @@ def export_results():
         print(f"Export error: {str(e)}")
         print(traceback.format_exc())
         return jsonify({'success': False, 'error': str(e)})
+    
+
 
 @app.route('/dashboard')
 def dashboard():
@@ -1815,6 +1831,8 @@ def get_all_transactions():
         'total_transactions': len(transactions),
         'bank_type': bank_type
     })
+
+
 
 # Add a new function to directly read Excel files using openpyxl for complex bank statements
 def extract_transactions_from_excel_directly(file_path, bank_type):
@@ -2000,7 +2018,6 @@ def extract_transactions_from_excel_directly(file_path, bank_type):
             # Map column indices to header names
             for col_idx in range(1, min(15, sheet.max_column + 1)):
                 cell_value = str(sheet.cell(row=header_row, column=col_idx).value or '').lower().strip()
-                
                 # Map columns to standardized names
                 if 'date' in cell_value and not 'value' in cell_value:
                     header_col_indices['date'] = col_idx
@@ -2101,7 +2118,14 @@ def extract_transactions_from_excel_directly(file_path, bank_type):
         print(traceback.format_exc())
         return []
 
+
+
 # ⬇️ Add this at the bottom of app.py
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))  # Get PORT from env
     app.run(host="0.0.0.0", port=port)        # Bind to 0.0.0.0 for external access
+ 
+
+
+
+ 

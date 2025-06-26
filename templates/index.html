@@ -294,13 +294,13 @@
                     <option value="">Select a bank...</option>
                     <option value="ICICI">ICICI Bank</option>
                     <option value="HDFC">HDFC Bank</option>
-                    <!-- <option value="SBI">SBI Bank</option> -->
-                    <option value="OTHERS">Others</option>
+                    <option value="SBI">SBI Bank</option>
+                    <!-- <option value="OTHERS">Others</option> -->
                 </select>
             </div>
 
             <div class="mb-4">
-                <label for="file" class="form-label">Upload Statement (PDF, CSV, XLSX):</label>
+                <label for="file" class="form-label">Upload Statement (PDF,XLSX):</label>
                 <input type="file" class="form-control" id="file" accept=".pdf,.csv,.xlsx">
             </div>
 
@@ -439,14 +439,11 @@
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5>Found ${results.length} results</h5>
                         <div class="export-buttons">
+                             <button class="btn btn-success btn-sm ms-2" onclick="exportResults('pdf')">
+                                <i class="fas fa-file-pdf"></i> Export PDF
+                            </button>
                             <button class="btn btn-success btn-sm" onclick="exportResults('csv')">
                                 <i class="fas fa-file-csv"></i> Export CSV
-                            </button>
-                            <button class="btn btn-success btn-sm ms-2" onclick="exportResults('excel')">
-                                <i class="fas fa-file-excel"></i> Export Excel
-                            </button>
-                            <button class="btn btn-success btn-sm ms-2" onclick="exportResults('pdf')">
-                                <i class="fas fa-file-pdf"></i> Export PDF
                             </button>
                         </div>
                     </div>
@@ -652,5 +649,4 @@
         }
     </script>
 </body>
-
 </html>
